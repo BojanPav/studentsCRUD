@@ -16,7 +16,7 @@ public class Students {
     private JButton deleteButton;
     private JButton searchButton;
     private JTextField txtid;
-    private JScrollPane table_1;
+    private JTextField txtUni;
 
     Connection con;
     PreparedStatement pst;
@@ -61,22 +61,24 @@ public class Students {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String students_name, students_email, students_mobile;
+                String students_name, students_email, students_mobile ,students_university;
                 students_name = txtName.getText();
                 students_email = txtEmail.getText();
                 students_mobile = txtMobile.getText();
-
+                students_university= txtUni.getText();
                 try {
-                    pst = con.prepareStatement("insert into students(students_name,students_email,students_mobile)values(?,?,?)");
+                    pst = con.prepareStatement("insert into students(students_name,students_email,students_mobile,students_university)values(?,?,?,?)");
                     pst.setString(1, students_name);
                     pst.setString(2, students_email);
                     pst.setString(3, students_mobile);
+                    pst.setString(4,students_university);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Record Added!!!!!");
                     table_load();
                     txtName.setText("");
                     txtEmail.setText("");
                     txtMobile.setText("");
+                    txtUni.setText("");
                     txtName.requestFocus();
                 } catch (SQLException e1) {
 
@@ -94,7 +96,7 @@ public class Students {
 
                     String students_id = txtid.getText();
 
-                    pst = con.prepareStatement("select students_name,students_email,students_mobile from students where students_id = ?");
+                    pst = con.prepareStatement("select students_name,students_email,students_mobile,students_university from students where students_id = ?");
                     pst.setString(1, students_id);
                     ResultSet rs = pst.executeQuery();
 
@@ -102,15 +104,19 @@ public class Students {
                         String students_name = rs.getString(1);
                         String students_email = rs.getString(2);
                         String students_mobile = rs.getString(3);
+                        String students_university = rs.getString(4);
 
                         txtName.setText(students_name);
                         txtEmail.setText(students_email);
                         txtMobile.setText(students_mobile);
+                        txtUni.setText(students_university);
 
                     } else {
                         txtName.setText("");
                         txtEmail.setText("");
                         txtMobile.setText("");
+                        txtUni.setText("");
+
                         JOptionPane.showMessageDialog(null, "Invalid Students ID");
 
                     }
@@ -122,18 +128,21 @@ public class Students {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String students_id, students_name, students_email, students_mobile;
+                String students_id, students_name, students_email, students_mobile, students_university;
                 students_name = txtName.getText();
                 students_email = txtEmail.getText();
                 students_mobile = txtMobile.getText();
+                students_university=txtUni.getText();
+
                 students_id = txtid.getText();
 
                 try {
-                    pst = con.prepareStatement("update students set students_name = ?,students_email = ?,students_mobile= ? where students_id = ?");
+                    pst = con.prepareStatement("update students set students_name = ?,students_email = ?,students_mobile= ?,students_university where students_id = ?");
                     pst.setString(1, students_name);
                     pst.setString(2, students_email);
                     pst.setString(3, students_mobile);
-                    pst.setString(4, students_id);
+                    pst.setString(4, students_university);
+                    pst.setString(5, students_id);
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Record Updateee!!!!!");
@@ -141,6 +150,7 @@ public class Students {
                     txtName.setText("");
                     txtEmail.setText("");
                     txtMobile.setText("");
+                    txtUni.setText("");
                     txtName.requestFocus();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
@@ -166,6 +176,7 @@ public class Students {
                     txtEmail.setText("");
                     txtMobile.setText("");
                     txtName.requestFocus();
+                    txtUni.setText("");
                 } catch (SQLException e1) {
 
                     e1.printStackTrace();
@@ -173,6 +184,7 @@ public class Students {
             }
 
         });
+
     }
 }
 

@@ -16,7 +16,9 @@ public class Students {
     private JButton deleteButton;
     private JButton searchButton;
     private JTextField txtid;
+    private JScrollPane table_1;
     private JTextField txtUni;
+    private JTextField textUniversity;
 
     Connection con;
     PreparedStatement pst;
@@ -67,7 +69,7 @@ public class Students {
                 students_mobile = txtMobile.getText();
                 students_university= txtUni.getText();
                 try {
-                    pst = con.prepareStatement("insert into students(students_name,students_email,students_mobile,students_university)values(?,?,?,?)");
+                    pst = con.prepareStatement("CALL addNewStudent(?,?,?,?)");
                     pst.setString(1, students_name);
                     pst.setString(2, students_email);
                     pst.setString(3, students_mobile);

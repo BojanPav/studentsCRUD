@@ -12,12 +12,14 @@ public class Students {
     private JTextField txtMobile;
     private JButton saveButton;
     private JTable table1;
+    private JTable table2;
     private JButton updateButton;
     private JButton deleteButton;
     private JButton searchButton;
     private JTextField txtid;
     private JScrollPane table_1;
     private JTextField txtUni;
+    private JScrollPane table_2;
     private JTextField textUniversity;
 
     Connection con;
@@ -45,6 +47,15 @@ public class Students {
             e.printStackTrace();
         }
     }
+    void table_load1() {
+        try {
+            pst = con.prepareStatement("select * from university");
+            ResultSet rs = pst.executeQuery();
+            table2.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -59,6 +70,7 @@ public class Students {
     public Students() {
         connect();
         table_load();
+        table_load1();
         saveButton.addActionListener(new ActionListener() {
 
             @Override
@@ -147,7 +159,7 @@ public class Students {
                     pst.setString(5, students_id);
 
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Record Updateee!!!!!");
+                    JOptionPane.showMessageDialog(null, "Record Update !");
                     table_load();
                     txtName.setText("");
                     txtEmail.setText("");

@@ -40,7 +40,7 @@ public class Students {
 
     void table_load() {
         try {
-            pst = con.prepareStatement("select * from students");
+            pst = con.prepareStatement("Select * FROM allstudents");
             ResultSet rs = pst.executeQuery();
             table1.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException e) {
@@ -49,7 +49,7 @@ public class Students {
     }
     void table_load1() {
         try {
-            pst = con.prepareStatement("select * from university");
+            pst = con.prepareStatement("CALL numOfStudents");
             ResultSet rs = pst.executeQuery();
             table2.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException e) {
@@ -200,6 +200,9 @@ public class Students {
         });
 
     }
+
+
+
 }
 
 
